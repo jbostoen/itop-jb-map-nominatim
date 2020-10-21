@@ -5,16 +5,21 @@ Copyright (C) 2019-2020 Jeffrey Bostoen
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/jbostoen)
 🍻 ☕
 
-If you need assistance with iTop or one of its extensions or if you have something you want to see developed, 
-please get in touch to discuss the terms: **jbostoen.itop@outlook.com**
+Need assistance with iTop or one of its extensions?  
+Need custom development?  
+Please get in touch to discuss the terms: **jbostoen.itop@outlook.com**
 
 ## What?
 Adds a geolocator search bar to iTop (to look up Flemish addresses).
 
 ## Requirements
-* iTop extension: jb-map
+* iTop extensions: 
+  * [jb-crab](https://github.com/jbostoen/itop-jb-crab) - extension to manage and automatically import CRAB data (Flemish addresses)
+  * jb-map (pro extension, get in touch to obtain this) - extension to manage geographical data in iTop
 
 ## Cookbook
+
+PHP
 * adds a custom geolocator to the toolbar above the map)
 
 ## Libraries
