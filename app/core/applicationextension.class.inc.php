@@ -33,7 +33,7 @@ abstract class GeometryTabUIExtension_CrabAddress_Sample implements iGeometryTab
 	 * @details Originally written for iTop 2.7.0. In iTop 2.8, there seems to be a new autocomplete mechanism. Might need to be redefined here.
 	 *
 	 */
-	public function AddToolbarElement(?DBObjectSet $oSetObjects, DBObjectSet $oSetMaps, WebPage $oPage, ?AttributeGeometry $oAttDefGeometry, $sMapRenderingTriggeredBy, $sMapTargetId, $bEditMode = false) {
+	public static function AddToolbarElement(?DBObjectSet $oSetObjects, DBObjectSet $oSetMaps, WebPage $oPage, ?AttributeGeometry $oAttDefGeometry, $sMapRenderingTriggeredBy, $sMapTargetId, $bEditMode = false) {
 
 		// This will make sure this geolocator example only appears on a specific test database.
 		// Unfortunately it can't be placed around the class definition or it crashes in setup.
