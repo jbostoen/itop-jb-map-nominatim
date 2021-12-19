@@ -7,7 +7,7 @@
 	<description><![CDATA[Adds a search bar to the toolbar, which allows the user to look up CRAB addresses.]]></description>
 	<version>2.6.200127</version>
 	<release_date>2020-01-27</release_date>
-	<version_description><![CDATA[  ]]></version_description>
+	<version_description><![CDATA[]]></version_description>
 	<itop_version_min>2.6.0</itop_version_min>
 	<status>stable</status>
 	<mandatory>false</mandatory>
