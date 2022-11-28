@@ -13,7 +13,7 @@
 	function InitNominatimLocator(sGeolocatorId, sMapTargetId) {
 
 		// When changes are detected: do a look-up
-		$(document.body).on('keyup change blur input', '#geolocator_nominatimlocator_id_' + sGeolocatorId, function(e) {
+		$(document.body).on('keyup change blur input', '#' + sGeolocatorId, function(e) {
 			
 			let sAddress = $(this).val();
 			
@@ -22,23 +22,25 @@
 				return;
 			}
 			
-			console.log('Nominatim: Look up ' + sAddress);
+			console.log('Nominatim: Queue look up ' + sAddress);
 			sLastNominatimAddress = sAddress;
 			
-			// Center and zoom to feature.
-			let sUrl = 'https://nominatim.openstreetmap.org/search.php?&polygon_geojson=1&format=jsonv2&q=' + sAddress;
-			
 			// Cancel (client-side) any already on-going search.
-			if(oXHRNominatim !== null) {
+			if(oXHRNominatim !== null && sAddress != sLastNominatimAddress) {
 				oXHRNominatim.abort();
 			}
 				
-			setTimeout(function() {
+			setTimeout(function(sAddress) {
+
+				let sUrl = 'https://nominatim.openstreetmap.org/search.php?&polygon_geojson=1&format=jsonv2&q=' + sAddress;
 
 				// Still most request request and not an earlier one
-				if($('#geolocator_nominatimlocator_id_' + sGeolocatorId).val() != sLastNominatimAddress) {
+				if(sAddress != sLastNominatimAddress) {
+					console.log('Nominatim: Skip request for ' + sAddress + ' / Last address: ' + sLastNominatimAddress);
 					return;
 				}
+				
+				console.log('Nominatim: Request ' + sAddress);
 				
 				oXHRNominatim = $.ajax({type: 'GET', url: sUrl, success: function(data) {
 					
@@ -72,17 +74,17 @@
 						}
 						else {
 							
-							console.log('Nominatim: no results.');
+							console.log('Nominatim: No results.');
 							
 						}
 					
 					}
 					
-				}});
+				}, dataType: 'json'});
 
-			}, 1000);
+			}, 1000, sAddress);
 
-		}, dataType: 'json');
+		});
 	
 	}
 	
