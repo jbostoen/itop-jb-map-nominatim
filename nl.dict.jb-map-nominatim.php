@@ -6,9 +6,10 @@
  * Localized data
  */
 
-Dict::Add('EN US', 'English', 'English', array(
+Dict::Add('NL NL', 'Dutch', 'Dutch', array(
 	
 ));
+
 
 
 

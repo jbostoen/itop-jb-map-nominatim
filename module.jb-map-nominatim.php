@@ -10,11 +10,11 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'jb-map-crablocator/2.6.200127',
+	'jb-map-nominatim/2.6.200127',
 	array(
 		// Identification
 		//
-		'label' => 'jb-map-crablocator',
+		'label' => 'jb-map-nominatim',
 		'category' => 'business',
 
 		// Setup
@@ -31,7 +31,7 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
-			'model.jb-map-crablocator.php',
+			'model.jb-map-nominatim.php',
 			'app/core/applicationextension.class.inc.php',
 		),
 		'webservice' => array(
@@ -56,6 +56,7 @@ SetupWebPage::AddModule(
 		),
 	)
 );
+
 
 
 
