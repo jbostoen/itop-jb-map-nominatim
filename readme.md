@@ -12,7 +12,8 @@ Please get in touch to discuss the terms: **info@jeffreybostoen.be** / https://j
 
 ## What?
 
-Adds a geolocator search bar to iTop (to look up addresses using the Nominatim API).
+Adds a geolocator search bar to iTop (to look up addresses using the Nominatim API) when modifying a single iTop object (details view).    
+Note: this is just a concept, it does not contain all scenarios.
 
 ## Requirements
 

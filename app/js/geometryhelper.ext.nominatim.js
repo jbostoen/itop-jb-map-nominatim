@@ -56,20 +56,53 @@
 							// By defualt coordinates will be returned into EPSG:4326.
 							// This may need to be converted.
 							let sCRS = $('[data-map-target-id="' + sMapTargetId + '"]').attr('data-attribute-crs');
-							let oGeometry = oGeometryHelper.format.GeoJSON.readGeometry(oResult.geojson).getInteriorPoint().transform('EPSG:4326', sCRS);
+							
+							// It's inpredictable how accurate the result will be.
+							let oGeometry = oGeometryHelper.format.GeoJSON.readGeometry(oResult.geojson);
+							
+							switch(oGeometry.getType()) {
+								
+								case 'Point':
+									break;
+									
+								case 'LineString':
+									oGeometry = new ol.geom.Point(ol.extent.getCenter(oGeometry.getExtent()));
+									break;
+									
+								case 'Polygon':
+									oGeometry = oGeometry.getInteriorPoint();
+									break;
+									
+								default:
+									// Likely MultiPoint, MultiLineString, MultiPolygon?
+									console.log('Nominatim: unsupported type: ' + oGeometry.getType());
+									return;
+									break;
+									
+							}
+							
+							oGeometry.transform('EPSG:4326', sCRS);
+							
 							let oSource = oGeometryHelper.editableLayers['detail'].getSource();
 							
 							if(oSource.getFeatures().length == 1) {
 								oSource.getFeatures()[0].setGeometry(oGeometry);
 							}
 							else {
-								oSource.addFeature(new ol.geom.Point(oGeometry));
+								oSource.addFeature(new ol.Feature(oGeometry));
 							}
-										
+							
 							// Center and zoom
 							let oView = oGeometryHelper.maps[sMapTargetId].getView();
 							oView.setCenter(oGeometry.getCoordinates());
 							oView.setZoom(17);
+							
+							// Just in case (not sure whether there is a 'drawend' triggered, likely not this way):
+							// Save in geometry field already (both edit and non-edit; although non-edit is currently not supposed to be visible)
+							let oMapContainer = $('[data-map-target-id="' + sMapTargetId + '"]')[0];
+							let sFormat = $(oMapContainer).attr('data-attribute-format');
+							let sAttCode = $(oMapContainer).attr('data-attribute-code');
+							$('textarea[name="attr_' + sAttCode + '"]').val(oGeometryHelper.format[sFormat].writeGeometry(oGeometry));
 							
 						}
 						else {
