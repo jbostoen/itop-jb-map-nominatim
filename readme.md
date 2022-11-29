@@ -1,6 +1,6 @@
 # jb-map-nominatim
 
-Copyright (C) 2019-2022 Jeffrey Bostoen
+Copyright (c) 2019-2022 Jeffrey Bostoen
 
 [![License](https://img.shields.io/github/license/jbostoen/iTop-custom-extensions)](https://github.com/jbostoen/iTop-custom-extensions/blob/master/license.md)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/jbostoen)
@@ -23,7 +23,7 @@ iTop extensions:
 ## Cookbook
 
 PHP
-* adds a custom geolocator to the toolbar above the map)
+* Adds a custom geolocator in the toolbar above the map.
 
 ## Compatibility
 

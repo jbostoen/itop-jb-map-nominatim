@@ -10,7 +10,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'jb-map-nominatim/2.6.200127',
+	'jb-map-nominatim/2.7.221129',
 	array(
 		// Identification
 		//
