@@ -63,6 +63,8 @@
 							switch(oGeometry.getType()) {
 								
 								case 'Point':
+									// This line makes sure you get only XY coordinates and nothing like POINT M
+									oGeometry = new ol.geom.Point(ol.extent.getCenter(oGeometry.getExtent()));
 									break;
 									
 								case 'LineString':
