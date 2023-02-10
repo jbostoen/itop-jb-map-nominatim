@@ -62,8 +62,9 @@
 							
 							switch(oGeometry.getType()) {
 								
+								// Make sure to only get XY coordinates and nothing like POINT M
+									
 								case 'Point':
-									// This line makes sure you get only XY coordinates and nothing like POINT M
 									oGeometry = new ol.geom.Point(ol.extent.getCenter(oGeometry.getExtent()));
 									break;
 									
@@ -73,6 +74,7 @@
 									
 								case 'Polygon':
 									oGeometry = oGeometry.getInteriorPoint();
+									oGeometry = new ol.geom.Point(ol.extent.getCenter(oGeometry.getExtent()));
 									break;
 									
 								default:
