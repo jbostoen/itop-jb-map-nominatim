@@ -30,5 +30,6 @@ PHP
 
 * iTop 2.7
 * iTop 3.0
+* iTop 3.1
 
 
