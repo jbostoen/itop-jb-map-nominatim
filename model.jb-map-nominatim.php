@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @copyright   Copyright (C) 2019-2020 Jeffrey Bostoen
+ * @copyright   Copyright (c) 2019-2023 Jeffrey Bostoen
  * @license     See license.md
- * @version     2020-01-27 19:00:07
+ * @version     2.7.231023
  *
  * PHP Data Model definition file
  */

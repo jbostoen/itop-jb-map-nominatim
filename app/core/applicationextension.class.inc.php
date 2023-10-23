@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @copyright   Copyright (C) 2019-2020 Jeffrey Bostoen
+ * @copyright   Copyright (c) 2019-2023 Jeffrey Bostoen
  * @license     See license.md
- * @version     2020-01-27 19:00:07
+ * @version     2.7.231023
  *
  * Defines extensions for geometry tab.
  */
@@ -30,20 +30,16 @@ abstract class GeometryTabUIExtension_NominatimLocator implements iGeometryTabTo
 	 * @inheritDoc
 	 *
 	 */
-	public static function AddToolbarElement(?DBObjectSet $oSetObjects, DBObjectSet $oSetMaps, WebPage $oPage, ?AttributeGeometry $oAttDefGeometry, $sMapRenderingTriggeredBy, $sMapTargetId, $bEditMode = false) {
-
-		// Not applicable for dashlet
-		if($sMapTargetId !== 'detail') {
-			return;
-		}
+	public static function AddToolbarElement(?DBObjectSet $oSetObjects, DBObjectSet $oSetMaps, WebPage $oPage, ?AttributeGeometry $oAttDefGeometry, $sMapRenderingTriggeredBy, $sMapTargetId, $bEditMode) {
 
 		$sGeolocatorId = 'geolocator_nominatimlocator_id_'.$sMapTargetId;
+		$sEditMode = ($bEditMode == true ? 'true': 'false');
 		
 		$oPage->add_linked_script(utils::GetCurrentModuleUrl().'/app/js/geometryhelper.ext.nominatim.js');
 	
 		$oPage->add_ready_script(
 <<<JS
-		InitNominatimLocator('{$sGeolocatorId}', '{$sMapTargetId}');
+		InitNominatimLocator('{$sGeolocatorId}', '{$sMapTargetId}', {$sEditMode});
 JS
 		);
 		

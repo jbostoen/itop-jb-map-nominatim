@@ -1,16 +1,16 @@
 <?php
 
 /**
- * @copyright   Copyright (C) 2019-2020 Jeffrey Bostoen
+ * @copyright   Copyright (c) 2019-2023 Jeffrey Bostoen
  * @license     See license.md
- * @version     2020-01-27 19:00:07
+ * @version     2.7.231023
  *
  * iTop module definition file
  */
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'jb-map-nominatim/2.7.221129',
+	'jb-map-nominatim/2.7.231023',
 	array(
 		// Identification
 		//
@@ -23,7 +23,7 @@ SetupWebPage::AddModule(
 			'itop-config-mgmt/2.6.0',
 			'itop-request-mgmt-itil/2.6.0',
 			'jb-framework/2.6.0',
-			'jb-map-main/2.6.0',
+			'jb-map-main/2.7.231023',
 		),
 		'mandatory' => false,
 		'visible' => true,
