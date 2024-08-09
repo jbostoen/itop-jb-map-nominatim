@@ -12,7 +12,6 @@ namespace jb_itop_extensions\geometry;
 
 use \AttributeGeometry;
 use \DBObjectSet;
-use \DBProperty;
 use \utils;
 use \WebPage;
 
@@ -25,6 +24,11 @@ abstract class GeometryTabUIExtension_NominatimLocator implements iGeometryTabTo
 	 * @var \Float $fRank. Rank. Lower = button comes first in geometry tab UI collection.
 	 */
 	public static $fRank = 1.0;
+
+	/**
+	 * @var bool $bAddedCSS Whether or not the CSS has been added already.
+	 */
+	public static $bAddedCSS = false;
 	
 	/**
 	 * @inheritDoc
@@ -43,14 +47,20 @@ abstract class GeometryTabUIExtension_NominatimLocator implements iGeometryTabTo
 JS
 		);
 		
-		// GPS locator should not be visible if the map type is "image"
-		$oPage->add_style(
-<<<CSS
-			[data-map-type='image'] .jb-tabcontrol-nominatimlocator {
-				display: none;
-			}
-CSS
-		);
+		// GPS locator should not be visible if the map type is "image".
+		if(static::$bAddedCSS == false) {
+
+			$oPage->add_style(
+	<<<CSS
+				[data-map-type='image'] .jb-tabcontrol-nominatimlocator {
+					display: none;
+				}
+	CSS
+			);
+
+			static::$bAddedCSS = true;
+
+		}
 		
 		return
 <<<HTML

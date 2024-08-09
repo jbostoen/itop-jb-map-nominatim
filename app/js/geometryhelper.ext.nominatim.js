@@ -23,7 +23,7 @@
 				return;
 			}
 			
-			console.log('Nominatim: Queue look up ' + sAddress);
+			oGeometryHelper.traceLog('Nominatim: Queue look up ' + sAddress);
 			sLastNominatimAddress = sAddress;
 			
 			// Cancel (client-side) any already on-going search.
@@ -37,11 +37,11 @@
 
 				// Still most request request and not an earlier one.
 				if(sAddress != sLastNominatimAddress) {
-					console.log('Nominatim: Skip request for ' + sAddress + ' / Last address: ' + sLastNominatimAddress);
+					oGeometryHelper.traceLog('Nominatim: Skip request for ' + sAddress + ' / Last address: ' + sLastNominatimAddress);
 					return;
 				}
 				
-				console.log('Nominatim: Request ' + sAddress);
+				oGeometryHelper.traceLog('Nominatim: Request ' + sAddress);
 				
 				oXHRNominatim = $.ajax({type: 'GET', url: sUrl, success: function(data) {
 					
@@ -70,30 +70,32 @@
 								// Make sure to only get XY coordinates and nothing like POINT M
 									
 								case 'Point':
-									oGeometry = new ol.geom.Point(ol.extent.getCenter(oReturnedGeometry.getExtent()));
+									oCenterPoint = new ol.geom.Point(ol.extent.getCenter(oReturnedGeometry.getExtent()));
+									oGeometryHelper.traceLog('Nominatim: Point.');
 									break;
 									
 								case 'LineString':
-									oGeometry = new ol.geom.Point(ol.extent.getCenter(oReturnedGeometry.getExtent()));
+									oCenterPoint = new ol.geom.Point(ol.extent.getCenter(oReturnedGeometry.getExtent()));
+									oGeometryHelper.traceLog('Nominatim: LineString > derived point.');
 									break;
 									
 								case 'Polygon':
-									oGeometry = oReturnedGeometry.getInteriorPoint();
-									oGeometry = new ol.geom.Point(ol.extent.getCenter(oGeometry.getExtent()));
+									oCenterPoint = oReturnedGeometry.getInteriorPoint();
+									oCenterPoint = new ol.geom.Point(ol.extent.getCenter(oCenterPoint.getExtent()));
+									oGeometryHelper.traceLog('Nominatim: Polygon > derived point.');
 									break;
 									
 								default:
 									// Likely MultiPoint, MultiLineString, MultiPolygon?
-									console.log('Nominatim: unsupported type: ' + oGeometry.getType());
+									oGeometryHelper.traceLog('Nominatim: Unsupported geometry type: ' + oGeometry.getType());
 									return;
-									break;
 									
 							}
 							
 							let oView = oGeometryHelper.maps[sMapTargetId].getView();
 							
-							// For any type of map: zoom.
-							oView.setCenter(oGeometry.getCoordinates());
+							// For any type of map: center.
+							oView.setCenter(oCenterPoint.getCoordinates());
 							
 							// If the map 'detail' exists, the user is currently at least viewing a single object.
 							if(typeof oGeometryHelper.maps.detail !== 'undefined') {
@@ -106,23 +108,33 @@
 								
 									// If it's an allowed geometry type:
 									// Create or replace existing feature.
-									let oAttDef = oGeometryHelper.editableLayers.detail.get('itop').attDef;
+									let oAttDef = oGeometryHelper.editableLayers.detail.getSource().get('itop').attributeDefinition;
 									
 									// Be even more strict than just rely on the allowed types.
+									let oSetGeometry = null;
+									
 									if(oReturnedGeometry.getType() == $('#oGeometry_FeatureTypePicker_detail').val()) {
+										oSetGeometry = oReturnedGeometry;
+									}
+									// Fallback.
+									if(oSetGeometry == null &&  $('#oGeometry_FeatureTypePicker_detail').val() == 'Point') {
+										oSetGeometry = oCenterPoint;
+									}
+
+									if(oSetGeometry !== null) {
 									
 										let oSource = oGeometryHelper.editableLayers['detail'].getSource();
 										
 										if(oSource.getFeatures().length == 1) {
-											oSource.getFeatures()[0].setGeometry(oReturnedGeometry);
+											oSource.getFeatures()[0].setGeometry(oSetGeometry);
 										}
 										else {
-											oSource.addFeature(new ol.Feature(oReturnedGeometry));
+											oSource.addFeature(new ol.Feature(oSetGeometry));
 										}
 										
 										// Just in case (not sure whether there is a 'drawend' triggered, likely not this way):
 										// Update the coordinates of the geometry field already.
-										$('textarea[name="attr_' + oAttDef.attCode + '"]').val(oGeometryHelper.format[oAttDef.format].writeGeometry(oReturnedGeometry));
+										$('textarea[name="attr_' + oAttDef.attCode + '"]').val(oGeometryHelper.format[oAttDef.format].writeGeometry(oSetGeometry));
 										
 									}
 								
@@ -133,7 +145,7 @@
 						}
 						else {
 							
-							console.log('Nominatim: No results.');
+							oGeometryHelper.traceLog('Nominatim: No results.');
 							
 						}
 					

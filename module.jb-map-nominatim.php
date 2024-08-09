@@ -23,7 +23,7 @@ SetupWebPage::AddModule(
 			'itop-config-mgmt/2.6.0',
 			'itop-request-mgmt-itil/2.6.0',
 			'jb-framework/2.6.0',
-			'jb-map-main/2.7.231023',
+			'jb-map-main/2.7.240809',
 		),
 		'mandatory' => false,
 		'visible' => true,
