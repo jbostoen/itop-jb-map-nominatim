@@ -87,7 +87,7 @@
 									
 								default:
 									// Likely MultiPoint, MultiLineString, MultiPolygon?
-									oGeometryHelper.traceLog('Nominatim: Unsupported geometry type: ' + oGeometry.getType());
+									oGeometryHelper.traceLog('Nominatim: Unsupported geometry type: ' + oReturnedGeometry.getType());
 									return;
 									
 							}

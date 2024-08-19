@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   Copyright (c) 2019-2023 Jeffrey Bostoen
+ * @copyright   Copyright (c) 2019-2024 Jeffrey Bostoen
  * @license     See license.md
  *
  * Localized data
